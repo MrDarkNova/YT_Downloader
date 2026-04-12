@@ -1,0 +1,49 @@
+.banner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 clamp(20px,8vw,120px);
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+.banner > div, .banner > button {
+  display: flex;
+  align-items: flex-start;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(248,113,113,.08);
+  border: 1px solid rgba(248,113,113,.25);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  max-width: 860px;
+  margin: -10px clamp(20px,8vw,120px) 10px;
+}
+.icon { color: var(--danger); flex-shrink: 0; margin-top: 1px; }
+.content { flex: 1; min-width: 0; }
+.title {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .15em;
+  color: var(--danger);
+  margin-bottom: 3px;
+}
+.msg {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  color: var(--text2);
+  letter-spacing: .03em;
+  line-height: 1.5;
+}
+.dismiss {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text3);
+  padding: 2px;
+  flex-shrink: 0;
+  transition: color .3s;
+}
+.dismiss:hover { color: var(--danger); }

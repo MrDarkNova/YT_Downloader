@@ -1,0 +1,19 @@
+.section {
+  padding: clamp(60px,8vw,100px) clamp(20px,8vw,120px);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.resetBtn {
+  padding: 8px 18px !important;
+  font-size: .72rem !important;
+}

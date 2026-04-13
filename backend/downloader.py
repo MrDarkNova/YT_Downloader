@@ -3,6 +3,7 @@ import asyncio
 import os
 import re
 import tempfile
+import shutil
 from pathlib import Path
 
 QUALITY_MAP = {
@@ -16,9 +17,11 @@ QUALITY_MAP = {
 COOKIES_FILE = os.environ.get("COOKIES_PATH", os.path.join(os.path.dirname(__file__), "cookies.txt"))
 
 def _cookie_opts() -> dict:
-    if os.path.exists(COOKIES_FILE):
-        return {"cookiefile": COOKIES_FILE}
-    return {}
+    if not os.path.exists(COOKIES_FILE):
+        return {}
+    tmp_cookies = os.path.join(tempfile.gettempdir(), "yt_cookies.txt")
+    shutil.copy2(COOKIES_FILE, tmp_cookies)
+    return {"cookiefile": tmp_cookies}
 
 def sanitize(name: str) -> str:
     return re.sub(r'[\\/*?:"<>|]', "_", name)[:80]

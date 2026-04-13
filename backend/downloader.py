@@ -35,25 +35,22 @@ def fmt_views(n) -> str:
         return f"{n/1_000:.1f}K"
     return str(n)
 
-def build_format(quality: str) -> str:
-    if quality == "best":
-        return "bestvideo+bestaudio/bestvideo/best"
-    h = quality.replace("p", "")
-    return (
-        f"bestvideo[height<={h}]+bestaudio"
-        f"/bestvideo[height<={h}]"
-        f"/best[height<={h}]"
-        f"/bestvideo+bestaudio"
-        f"/bestvideo"
-        f"/best"
-    )
-
 def base_opts() -> dict:
     return {
         "quiet": True,
         "no_warnings": True,
+        "nocheckcertificate": True,
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "extractor_args": {"youtube": {"player_client": ["ios", "web"]}},
+        "http_headers": {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-us,en;q=0.5",
+            "Sec-Fetch-Mode": "navigate",
+        },
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["ios", "web"],
+            }
+        },
         **_cookie_opts(),
     }
 
@@ -95,10 +92,24 @@ async def fetch_info(url: str) -> dict:
 
 async def stream_download(url: str, fmt: str, quality: str):
     is_audio = fmt == "audio"
-    fmt_selector = "bestaudio/best" if is_audio else build_format(quality)
     ext = "mp3" if is_audio else "mp4"
-
     tmp_dir = tempfile.mkdtemp()
+
+    if is_audio:
+        fmt_selector = "bestaudio/best"
+    elif quality == "best":
+        fmt_selector = "bestvideo+bestaudio/bestvideo/best"
+    else:
+        h = quality.replace("p", "")
+        fmt_selector = (
+            f"bestvideo[height<={h}][ext=mp4]+bestaudio[ext=m4a]"
+            f"/bestvideo[height<={h}]+bestaudio"
+            f"/bestvideo[height<={h}]"
+            f"/best[height<={h}]"
+            f"/bestvideo+bestaudio"
+            f"/bestvideo"
+            f"/best"
+        )
 
     post_processors = []
     if is_audio:
@@ -114,6 +125,9 @@ async def stream_download(url: str, fmt: str, quality: str):
         "outtmpl": os.path.join(tmp_dir, "%(title)s.%(ext)s"),
         "merge_output_format": ext,
         "postprocessors": post_processors,
+        "retries": 5,
+        "fragment_retries": 5,
+        "file_access_retries": 3,
     }
 
     def _download():

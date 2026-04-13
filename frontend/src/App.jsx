@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useCursor       from './hooks/useCursor.js';
-import useReveal       from './hooks/useReveal.js';
 import useTheme        from './hooks/useTheme.js';
 import { fetchInfo, downloadMedia } from './data/api.js';
 
@@ -21,17 +20,22 @@ function App() {
   const [downloading, setDownloading] = useState(false);
   const [progress,    setProgress]    = useState(0);
   const [currentUrl,  setCurrentUrl]  = useState('');
-
-  useReveal(info);
+  const resultRef = useRef(null);
 
   useEffect(() => {
-    if (info) {
+    if (!info && !error) return;
+    const els = document.querySelectorAll('.reveal');
+    els.forEach(el => {
+      el.classList.remove('visible');
+      void el.offsetWidth;
+      el.classList.add('visible');
+    });
+    if (info && resultRef.current) {
       setTimeout(() => {
-        document.querySelector('[class*="ResultSection"]')
-          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 150);
+        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
-  }, [info]);
+  }, [info, error]);
 
   const handleFetch = async (url) => {
     setError('');
@@ -92,13 +96,15 @@ function App() {
         )}
 
         {info && (
-          <ResultSection
-            info={info}
-            onDownload={handleDownload}
-            downloading={downloading}
-            progress={progress}
-            onReset={handleReset}
-          />
+          <div ref={resultRef}>
+            <ResultSection
+              info={info}
+              onDownload={handleDownload}
+              downloading={downloading}
+              progress={progress}
+              onReset={handleReset}
+            />
+          </div>
         )}
       </main>
 

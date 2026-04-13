@@ -41,20 +41,21 @@ export async function downloadMedia(url, format, quality, onProgress) {
     if (total && onProgress) onProgress(Math.round((received / total) * 100));
   }
 
-  const blob     = new Blob(chunks, {
-    type: format === 'audio' ? 'audio/mpeg' : 'video/mp4',
-  });
+  const mimeType = format === 'audio' ? 'audio/mpeg' : 'video/mp4';
+  const blob     = new Blob(chunks, { type: mimeType });
   const blobUrl  = URL.createObjectURL(blob);
-  const link     = document.createElement('a');
-  link.style.display = 'none';
-  link.href      = blobUrl;
-  link.download  = filename;
+
+  const link        = document.createElement('a');
+  link.href         = blobUrl;
+  link.download     = filename;
+  link.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
   document.body.appendChild(link);
-  link.click();
+  link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
   setTimeout(() => {
     document.body.removeChild(link);
     URL.revokeObjectURL(blobUrl);
-  }, 1000);
+  }, 2000);
 
   return filename;
 }

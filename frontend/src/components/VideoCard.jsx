@@ -1,10 +1,27 @@
+import { useState } from 'react';
 import styles from './VideoCard.module.css';
 
 function VideoCard({ info }) {
+  const [thumbErr, setThumbErr] = useState(false);
+
   return (
     <div className={`${styles.card} reveal`}>
       <div className={styles.thumb}>
-        <img src={info.thumbnail} alt={info.title} />
+        {!thumbErr && info.thumbnail ? (
+          <img
+            src={info.thumbnail}
+            alt={info.title}
+            onError={() => setThumbErr(true)}
+          />
+        ) : (
+          <div className={styles.thumbFallback}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+            <span>NO PREVIEW</span>
+          </div>
+        )}
         <div className={styles.duration}>{info.duration}</div>
         <div className={styles.platform}>{info.platform}</div>
       </div>

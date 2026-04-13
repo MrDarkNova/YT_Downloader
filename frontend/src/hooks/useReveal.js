@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
 
-function useReveal(dep) {
+function useReveal() {
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
-    );
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, [dep]);
+    const run = () => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 20) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    run();
+    window.addEventListener('scroll', run, { passive: true });
+    return () => window.removeEventListener('scroll', run);
+  }, []);
 }
 
 export default useReveal;

@@ -44,19 +44,21 @@ def build_format(quality: str) -> str:
         f"/bestvideo[height<={h}]"
         f"/best[height<={h}]"
         f"/bestvideo+bestaudio"
+        f"/bestvideo"
         f"/best"
     )
 
-async def fetch_info(url: str) -> dict:
-    opts = {
+def base_opts() -> dict:
+    return {
         "quiet": True,
         "no_warnings": True,
-        "skip_download": True,
-        "extract_flat": False,
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "extractor_args": {"youtube": {"player_client": ["ios", "web"]}},
         **_cookie_opts(),
     }
+
+async def fetch_info(url: str) -> dict:
+    opts = {**base_opts(), "skip_download": True, "extract_flat": False}
 
     def _extract():
         with yt_dlp.YoutubeDL(opts) as ydl:
@@ -75,11 +77,17 @@ async def fetch_info(url: str) -> dict:
     qualities = sorted(qualities, key=lambda x: int(x["value"][:-1]), reverse=True)
     qualities.insert(0, {"label": "BEST", "value": "best"})
 
+    thumbnail = info.get("thumbnail", "")
+    if not thumbnail:
+        thumbs = info.get("thumbnails", [])
+        if thumbs:
+            thumbnail = thumbs[-1].get("url", "")
+
     return {
         "title":     info.get("title", "Unknown"),
-        "thumbnail": info.get("thumbnail", ""),
+        "thumbnail": thumbnail,
         "duration":  fmt_duration(info.get("duration", 0)),
-        "uploader":  info.get("uploader", "Unknown"),
+        "uploader":  info.get("uploader") or info.get("channel") or "Unknown",
         "views":     fmt_views(info.get("view_count")),
         "platform":  info.get("extractor_key", "Unknown"),
         "qualities": qualities,
@@ -101,15 +109,11 @@ async def stream_download(url: str, fmt: str, quality: str):
         }]
 
     opts = {
+        **base_opts(),
         "format": fmt_selector,
         "outtmpl": os.path.join(tmp_dir, "%(title)s.%(ext)s"),
-        "quiet": True,
-        "no_warnings": True,
         "merge_output_format": ext,
         "postprocessors": post_processors,
-        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "extractor_args": {"youtube": {"player_client": ["ios", "web"]}},
-        **_cookie_opts(),
     }
 
     def _download():

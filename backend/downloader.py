@@ -7,11 +7,11 @@ import shutil
 from pathlib import Path
 
 QUALITY_MAP = {
-    "best":  "bestvideo+bestaudio/best",
-    "1080p": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
-    "720p":  "bestvideo[height<=720]+bestaudio/best[height<=720]",
-    "480p":  "bestvideo[height<=480]+bestaudio/best[height<=480]",
-    "360p":  "bestvideo[height<=360]+bestaudio/best[height<=360]",
+    "best":  "bestvideo+bestaudio/best/best",
+    "1080p": "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
+    "720p":  "bestvideo[height<=720]+bestaudio/best[height<=720]/best",
+    "480p":  "bestvideo[height<=480]+bestaudio/best[height<=480]/best",
+    "360p":  "bestvideo[height<=360]+bestaudio/best[height<=360]/best",
 }
 
 COOKIES_FILE = os.environ.get("COOKIES_PATH", os.path.join(os.path.dirname(__file__), "cookies.txt"))
@@ -68,7 +68,7 @@ async def fetch_info(url: str) -> dict:
     qualities = []
     for f in info.get("formats", []):
         h = f.get("height")
-        if h and h not in seen_heights and f.get("vcodec", "none") != "none":
+        if h and h not in seen_heights:
             seen_heights.add(h)
             qualities.append({"label": f"{h}p", "value": f"{h}p"})
 

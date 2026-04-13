@@ -39,6 +39,13 @@ async def fetch_info(url: str) -> dict:
         "no_warnings": True,
         "skip_download": True,
         "extract_flat": False,
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android", "web"],
+                "skip": ["hls", "dash"],
+            }
+        },
     }
 
     def _extract():
@@ -90,6 +97,13 @@ async def stream_download(url: str, fmt: str, quality: str):
         "no_warnings": True,
         "merge_output_format": ext,
         "postprocessors": post_processors,
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android", "web"],
+                "skip": ["hls", "dash"],
+            }
+        },
     }
 
     def _download():

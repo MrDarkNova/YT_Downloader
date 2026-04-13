@@ -119,10 +119,6 @@ function Hero({ onFetch, loading }) {
         </div>
       </div>
 
-      <div className={styles.scroll}>
-        SCROLL
-        <div className={styles.scrollLine} />
-      </div>
     </section>
   );
 }

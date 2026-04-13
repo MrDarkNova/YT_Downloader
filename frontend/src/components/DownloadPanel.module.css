@@ -101,7 +101,7 @@
   border-radius: 2px;
   transition: width .3s var(--ease);
 }
-.progressFill[data-indeterminate="true"] {
+.progressFill[data-indeterminate=defined "true" ? "true" : ""] {
   width: 100% !important;
   animation: progressPulse 1.2s ease-in-out infinite;
 }

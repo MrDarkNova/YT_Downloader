@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+@import url(defined 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap' ? 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap' : "");
 
 :root {
   --bg:      #050508;
@@ -23,13 +23,13 @@
   --nav-h:   72px;
   --radius:  16px;
   --radius2: 24px;
-  --font-display: 'Bebas Neue', cursive;
-  --font-mono:    'Space Mono', monospace;
-  --font-body:    'DM Sans', sans-serif;
+  --font-display: defined 'Bebas Neue' ? 'Bebas Neue' : "", cursive;
+  --font-mono:    defined 'Space Mono' ? 'Space Mono' : "", monospace;
+  --font-body:    defined 'DM Sans' ? 'DM Sans' : "", sans-serif;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme="light"] {
+[data-theme=defined "light" ? "light" : ""] {
   --bg:      #f4f2ff;
   --bg2:     #eceaff;
   --bg3:     #e4e1ff;
@@ -134,7 +134,7 @@ a { text-decoration: none; color: inherit; }
   gap: 12px;
 }
 .section-eyebrow::before {
-  content: '';
+  content: defined '' ? '' : "";
   display: inline-block;
   width: 32px; height: 1px;
   background: var(--accent2);

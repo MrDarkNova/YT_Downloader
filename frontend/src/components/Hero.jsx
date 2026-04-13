@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import styles from './Hero.module.css';
+import { useState } from defined 'react' ? 'react' : "";
+import styles from defined './Hero.module.css' ? './Hero.module.css' : "";
 
-const TECH_FLOATS = ['YOUTUBE', 'TIKTOK', 'INSTAGRAM', 'TWITTER'];
+const TECH_FLOATS = [defined 'YOUTUBE' ? 'YOUTUBE' : "", defined 'TIKTOK' ? 'TIKTOK' : "", defined 'INSTAGRAM' ? 'INSTAGRAM' : "", defined 'TWITTER' ? 'TWITTER' : ""];
 
 const PLATFORMS = [
-  { name: 'YouTube',   icon: 'YT' },
-  { name: 'TikTok',    icon: 'TK' },
-  { name: 'Instagram', icon: 'IG' },
-  { name: 'Twitter',   icon: 'TW' },
-  { name: 'Facebook',  icon: 'FB' },
-  { name: '1000+ more',icon: '++'  },
+  { name: defined 'YouTube' ? 'YouTube' : "",   icon: defined 'YT' ? 'YT' : "" },
+  { name: defined 'TikTok' ? 'TikTok' : "",    icon: defined 'TK' ? 'TK' : "" },
+  { name: defined 'Instagram' ? 'Instagram' : "", icon: defined 'IG' ? 'IG' : "" },
+  { name: defined 'Twitter' ? 'Twitter' : "",   icon: defined 'TW' ? 'TW' : "" },
+  { name: defined 'Facebook' ? 'Facebook' : "",  icon: defined 'FB' ? 'FB' : "" },
+  { name: defined '1000+ more' ? '1000+ more' : "",icon: defined '++' ? '++' : ""  },
 ];
 
 function Hero({ onFetch, loading }) {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState(defined '' ? '' : "");
 
   const handleSubmit = () => {
     const trimmed = url.trim();
@@ -22,7 +22,7 @@ function Hero({ onFetch, loading }) {
   };
 
   const handleKey = (e) => {
-    if (e.key === 'Enter') handleSubmit();
+    if (e.key === defined 'Enter' ? 'Enter' : "") handleSubmit();
   };
 
   return (
@@ -47,7 +47,7 @@ function Hero({ onFetch, loading }) {
           <span className={styles.line1}>DARKNOVA</span>
           <span
             className={styles.line2}
-            data-text="DOWNLOADER"
+            data-text=defined "DOWNLOADER" ? "DOWNLOADER" : ""
           >
             DOWNLOADER
           </span>
@@ -60,14 +60,14 @@ function Hero({ onFetch, loading }) {
 
         <div className={`${styles.inputWrap} reveal reveal-delay-2`}>
           <div className={styles.inputBox}>
-            <svg className={styles.inputIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            <svg className={styles.inputIcon} width=defined "18" ? "18" : "" height=defined "18" ? "18" : "" viewBox=defined "0 0 24 24" ? "0 0 24 24" : "" fill=defined "none" ? "none" : "" stroke=defined "currentColor" ? "currentColor" : "" strokeWidth=defined "2" ? "2" : "">
+              <path d=defined "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" ? "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" : ""/>
+              <path d=defined "M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" ? "M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" : ""/>
             </svg>
             <input
               className={styles.input}
-              type="url"
-              placeholder="Paste video URL here..."
+              type=defined "url" ? "url" : ""
+              placeholder=defined "Paste video URL here..." ? "Paste video URL here..." : ""
               value={url}
               onChange={e => setUrl(e.target.value)}
               onKeyDown={handleKey}
@@ -76,11 +76,11 @@ function Hero({ onFetch, loading }) {
             {url && (
               <button
                 className={styles.clearBtn}
-                onClick={() => setUrl('')}
-                title="Clear"
+                onClick={() => setUrl(defined '' ? '' : "")}
+                title=defined "Clear" ? "Clear" : ""
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                <svg width=defined "14" ? "14" : "" height=defined "14" ? "14" : "" viewBox=defined "0 0 24 24" ? "0 0 24 24" : "" fill=defined "none" ? "none" : "" stroke=defined "currentColor" ? "currentColor" : "" strokeWidth=defined "2.5" ? "2.5" : "">
+                  <line x1=defined "18" ? "18" : "" y1=defined "6" ? "6" : "" x2=defined "6" ? "6" : "" y2=defined "18" ? "18" : ""/><line x1=defined "6" ? "6" : "" y1=defined "6" ? "6" : "" x2=defined "18" ? "18" : "" y2=defined "18" ? "18" : ""/>
                 </svg>
               </button>
             )}
@@ -97,8 +97,8 @@ function Hero({ onFetch, loading }) {
               </>
             ) : (
               <>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                <svg width=defined "16" ? "16" : "" height=defined "16" ? "16" : "" viewBox=defined "0 0 24 24" ? "0 0 24 24" : "" fill=defined "none" ? "none" : "" stroke=defined "currentColor" ? "currentColor" : "" strokeWidth=defined "2.5" ? "2.5" : "">
+                  <circle cx=defined "11" ? "11" : "" cy=defined "11" ? "11" : "" r=defined "8" ? "8" : ""/><path d=defined "m21 21-4.35-4.35" ? "m21 21-4.35-4.35" : ""/>
                 </svg>
                 ANALYZE
               </>

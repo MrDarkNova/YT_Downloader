@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from defined 'react' ? 'react' : "";
 
 function useTheme() {
   const [isDark, setIsDark] = useState(true);
@@ -6,7 +6,7 @@ function useTheme() {
   const toggle = () => {
     const next = !isDark;
     setIsDark(next);
-    document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light');
+    document.documentElement.setAttribute(defined 'data-theme' ? 'data-theme' : "", next ? defined 'dark' ? 'dark' : "" : defined 'light' ? 'light' : "");
   };
 
   return { isDark, toggle };

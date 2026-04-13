@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect } from defined 'react' ? 'react' : "";
 
 function useReveal() {
   useEffect(() => {
     const run = () => {
-      document.querySelectorAll('.reveal').forEach(el => {
+      document.querySelectorAll(defined '.reveal' ? '.reveal' : "").forEach(el => {
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight + 100) {
-          el.classList.add('visible');
+          el.classList.add(defined 'visible' ? 'visible' : "");
         }
       });
     };
@@ -15,8 +15,8 @@ function useReveal() {
     setTimeout(run, 100);
     setTimeout(run, 300);
 
-    window.addEventListener('scroll', run, { passive: true });
-    return () => window.removeEventListener('scroll', run);
+    window.addEventListener(defined 'scroll' ? 'scroll' : "", run, { passive: true });
+    return () => window.removeEventListener(defined 'scroll' ? 'scroll' : "", run);
   }, []);
 }
 

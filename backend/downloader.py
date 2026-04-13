@@ -13,6 +13,13 @@ QUALITY_MAP = {
     "360p":  "bestvideo[height<=360]+bestaudio/best[height<=360]",
 }
 
+COOKIES_FILE = os.path.join(os.path.dirname(__file__), "cookies.txt")
+
+def _cookie_opts() -> dict:
+    if os.path.exists(COOKIES_FILE):
+        return {"cookiefile": COOKIES_FILE}
+    return {}
+
 def sanitize(name: str) -> str:
     return re.sub(r'[\\/*?:"<>|]', "_", name)[:80]
 
@@ -39,13 +46,13 @@ async def fetch_info(url: str) -> dict:
         "no_warnings": True,
         "skip_download": True,
         "extract_flat": False,
-        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "extractor_args": {
             "youtube": {
-                "player_client": ["android", "web"],
-                "skip": ["hls", "dash"],
+                "player_client": ["ios", "web"],
             }
         },
+        **_cookie_opts(),
     }
 
     def _extract():
@@ -97,13 +104,13 @@ async def stream_download(url: str, fmt: str, quality: str):
         "no_warnings": True,
         "merge_output_format": ext,
         "postprocessors": post_processors,
-        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "extractor_args": {
             "youtube": {
-                "player_client": ["android", "web"],
-                "skip": ["hls", "dash"],
+                "player_client": ["ios", "web"],
             }
         },
+        **_cookie_opts(),
     }
 
     def _download():

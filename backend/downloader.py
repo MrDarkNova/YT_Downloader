@@ -48,7 +48,8 @@ def base_opts() -> dict:
         },
         "extractor_args": {
             "youtube": {
-                "player_client": ["ios", "web"],
+                "player_client": ["tv_embedded", "ios", "web"],
+                "player_skip": ["webpage", "configs"],
             }
         },
         **_cookie_opts(),
@@ -125,9 +126,11 @@ async def stream_download(url: str, fmt: str, quality: str):
         "outtmpl": os.path.join(tmp_dir, "%(title)s.%(ext)s"),
         "merge_output_format": ext,
         "postprocessors": post_processors,
-        "retries": 5,
-        "fragment_retries": 5,
-        "file_access_retries": 3,
+        "retries": 10,
+        "fragment_retries": 10,
+        "file_access_retries": 5,
+        "buffersize": 1024,
+        "http_chunk_size": 10485760,
     }
 
     def _download():

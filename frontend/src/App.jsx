@@ -14,7 +14,6 @@ import Footer        from './components/Footer.jsx';
 function App() {
   const { isDark, toggle } = useTheme();
   useCursor();
-  useReveal();
 
   const [stage,       setStage]       = useState('idle');
   const [info,        setInfo]        = useState(null);
@@ -23,12 +22,14 @@ function App() {
   const [progress,    setProgress]    = useState(0);
   const [currentUrl,  setCurrentUrl]  = useState('');
 
+  useReveal(info);
+
   useEffect(() => {
     if (info) {
       setTimeout(() => {
         document.querySelector('[class*="ResultSection"]')
           ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      }, 150);
     }
   }, [info]);
 

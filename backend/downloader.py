@@ -6,14 +6,6 @@ import tempfile
 import shutil
 from pathlib import Path
 
-QUALITY_MAP = {
-    "best":  "bestvideo+bestaudio/best/best",
-    "1080p": "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
-    "720p":  "bestvideo[height<=720]+bestaudio/best[height<=720]/best",
-    "480p":  "bestvideo[height<=480]+bestaudio/best[height<=480]/best",
-    "360p":  "bestvideo[height<=360]+bestaudio/best[height<=360]/best",
-}
-
 COOKIES_FILE = os.environ.get("COOKIES_PATH", os.path.join(os.path.dirname(__file__), "cookies.txt"))
 
 def _cookie_opts() -> dict:
@@ -43,6 +35,18 @@ def fmt_views(n) -> str:
         return f"{n/1_000:.1f}K"
     return str(n)
 
+def build_format(quality: str) -> str:
+    if quality == "best":
+        return "bestvideo+bestaudio/bestvideo/best"
+    h = quality.replace("p", "")
+    return (
+        f"bestvideo[height<={h}]+bestaudio"
+        f"/bestvideo[height<={h}]"
+        f"/best[height<={h}]"
+        f"/bestvideo+bestaudio"
+        f"/best"
+    )
+
 async def fetch_info(url: str) -> dict:
     opts = {
         "quiet": True,
@@ -50,11 +54,7 @@ async def fetch_info(url: str) -> dict:
         "skip_download": True,
         "extract_flat": False,
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["ios", "web"],
-            }
-        },
+        "extractor_args": {"youtube": {"player_client": ["ios", "web"]}},
         **_cookie_opts(),
     }
 
@@ -87,7 +87,7 @@ async def fetch_info(url: str) -> dict:
 
 async def stream_download(url: str, fmt: str, quality: str):
     is_audio = fmt == "audio"
-    fmt_selector = "bestaudio/best" if is_audio else QUALITY_MAP.get(quality, QUALITY_MAP["best"])
+    fmt_selector = "bestaudio/best" if is_audio else build_format(quality)
     ext = "mp3" if is_audio else "mp4"
 
     tmp_dir = tempfile.mkdtemp()
@@ -108,11 +108,7 @@ async def stream_download(url: str, fmt: str, quality: str):
         "merge_output_format": ext,
         "postprocessors": post_processors,
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["ios", "web"],
-            }
-        },
+        "extractor_args": {"youtube": {"player_client": ["ios", "web"]}},
         **_cookie_opts(),
     }
 

@@ -41,15 +41,20 @@ export async function downloadMedia(url, format, quality, onProgress) {
     if (total && onProgress) onProgress(Math.round((received / total) * 100));
   }
 
-  const blob = new Blob(chunks, {
+  const blob     = new Blob(chunks, {
     type: format === 'audio' ? 'audio/mpeg' : 'video/mp4',
   });
-
-  const link    = document.createElement('a');
-  link.href     = URL.createObjectURL(blob);
-  link.download = filename;
+  const blobUrl  = URL.createObjectURL(blob);
+  const link     = document.createElement('a');
+  link.style.display = 'none';
+  link.href      = blobUrl;
+  link.download  = filename;
+  document.body.appendChild(link);
   link.click();
-  URL.revokeObjectURL(link.href);
+  setTimeout(() => {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(blobUrl);
+  }, 1000);
 
   return filename;
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import useCursor       from './hooks/useCursor.js';
-import useTheme        from './hooks/useTheme.js';
+import useCursor  from './hooks/useCursor.js';
+import useReveal  from './hooks/useReveal.js';
+import useTheme   from './hooks/useTheme.js';
 import { fetchInfo, downloadMedia } from './data/api.js';
 
 import Loader        from './components/Loader.jsx';
@@ -13,6 +14,7 @@ import Footer        from './components/Footer.jsx';
 function App() {
   const { isDark, toggle } = useTheme();
   useCursor();
+  useReveal();
 
   const [stage,       setStage]       = useState('idle');
   const [info,        setInfo]        = useState(null);
@@ -23,19 +25,12 @@ function App() {
   const resultRef = useRef(null);
 
   useEffect(() => {
-    if (!info && !error) return;
-    const els = document.querySelectorAll('.reveal');
-    els.forEach(el => {
-      el.classList.remove('visible');
-      void el.offsetWidth;
-      el.classList.add('visible');
-    });
-    if (info && resultRef.current) {
-      setTimeout(() => {
-        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    }
-  }, [info, error]);
+    if (!info) return;
+    setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }, [info]);
 
   const handleFetch = async (url) => {
     setError('');
@@ -83,16 +78,10 @@ function App() {
       <Navbar isDark={isDark} onThemeToggle={toggle} />
 
       <main>
-        <Hero
-          onFetch={handleFetch}
-          loading={stage === 'fetching'}
-        />
+        <Hero onFetch={handleFetch} loading={stage === 'fetching'} />
 
         {error && (
-          <ErrorBanner
-            message={error}
-            onDismiss={() => setError('')}
-          />
+          <ErrorBanner message={error} onDismiss={() => setError('')} />
         )}
 
         {info && (

@@ -1,9 +1,9 @@
-import { useEffect } from defined 'react' ? 'react' : "";
+import { useEffect } from 'react';
 
 function useCursor() {
   useEffect(() => {
-    const dot  = document.getElementById(defined 'cursorDot' ? 'cursorDot' : "");
-    const ring = document.getElementById(defined 'cursorRing' ? 'cursorRing' : "");
+    const dot  = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
     if (!dot || !ring) return;
 
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -23,29 +23,29 @@ function useCursor() {
     };
 
     const onEnter = () => {
-      ring.style.width       = defined '48px' ? '48px' : "";
-      ring.style.height      = defined '48px' ? '48px' : "";
-      ring.style.borderColor = defined 'var(--accent2)' ? 'var(--accent2)' : "";
+      ring.style.width       = '48px';
+      ring.style.height      = '48px';
+      ring.style.borderColor = 'var(--accent2)';
     };
     const onLeave = () => {
-      ring.style.width       = defined '32px' ? '32px' : "";
-      ring.style.height      = defined '32px' ? '32px' : "";
-      ring.style.borderColor = defined 'var(--accent)' ? 'var(--accent)' : "";
+      ring.style.width       = '32px';
+      ring.style.height      = '32px';
+      ring.style.borderColor = 'var(--accent)';
     };
 
-    document.addEventListener(defined 'mousemove' ? 'mousemove' : "", onMove);
+    document.addEventListener('mousemove', onMove);
     track();
 
     const bindTargets = () => {
-      document.querySelectorAll(defined 'a,button,.hoverable' ? 'a,button,.hoverable' : "").forEach(el => {
-        el.addEventListener(defined 'mouseenter' ? 'mouseenter' : "", onEnter);
-        el.addEventListener(defined 'mouseleave' ? 'mouseleave' : "", onLeave);
+      document.querySelectorAll('a,button,.hoverable').forEach(el => {
+        el.addEventListener('mouseenter', onEnter);
+        el.addEventListener('mouseleave', onLeave);
       });
     };
     bindTargets();
 
     return () => {
-      document.removeEventListener(defined 'mousemove' ? 'mousemove' : "", onMove);
+      document.removeEventListener('mousemove', onMove);
       cancelAnimationFrame(rafId);
     };
   }, []);

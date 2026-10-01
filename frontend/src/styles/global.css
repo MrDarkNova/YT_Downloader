@@ -1,7 +1,7 @@
-@import url(defined 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap' ? 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap' : "");
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520;9..144,640&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@380;500&display=swap');
 
 :root {
-  --bg:      #050508;
+  --bg:      #0e0d0b;
   --bg2:     #0a0a10;
   --bg3:     #0f0f18;
   --surface:  rgba(255,255,255,0.03);
@@ -11,11 +11,11 @@
   --text:   #f0eeff;
   --text2:  #9890b8;
   --text3:  #5a5475;
-  --accent:  #7c5cfc;
-  --accent2: #a78bfa;
+  --accent:  #c6a15b;
+  --accent2: #e4c98a;
   --accent3: #c4b5fd;
-  --glow:    rgba(124,92,252,0.35);
-  --glow2:   rgba(124,92,252,0.15);
+  --glow:    rgba(198,161,91,0.28);
+  --glow2:   rgba(198,161,91,0.12);
   --cyan:    #22d3ee;
   --gold:    #fbbf24;
   --danger:  #f87171;
@@ -23,28 +23,28 @@
   --nav-h:   72px;
   --radius:  16px;
   --radius2: 24px;
-  --font-display: defined 'Bebas Neue' ? 'Bebas Neue' : "", cursive;
-  --font-mono:    defined 'Space Mono' ? 'Space Mono' : "", monospace;
-  --font-body:    defined 'DM Sans' ? 'DM Sans' : "", sans-serif;
+  --font-display: 'Fraunces', cursive;
+  --font-mono:    'IBM Plex Mono', monospace;
+  --font-body:    'Outfit', sans-serif;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme=defined "light" ? "light" : ""] {
-  --bg:      #f4f2ff;
-  --bg2:     #eceaff;
-  --bg3:     #e4e1ff;
+[data-theme="light"] {
+  --bg:      #f6f1e7;
+  --bg2:     #efe6d6;
+  --bg3:     #e7dcc8;
   --surface:  rgba(0,0,0,0.03);
   --surface2: rgba(0,0,0,0.06);
   --border:   rgba(0,0,0,0.08);
   --border2:  rgba(0,0,0,0.14);
-  --text:   #1a1530;
-  --text2:  #4a4270;
-  --text3:  #9890c0;
-  --accent:  #6d42f5;
-  --accent2: #8b6af0;
-  --accent3: #a78bfa;
-  --glow:    rgba(109,66,245,0.2);
-  --glow2:   rgba(109,66,245,0.1);
+  --text:   #1a1612;
+  --text2:  #5c5348;
+  --text3:  #8a7d6e;
+  --accent:  #8c6a32;
+  --accent2: #c6a15b;
+  --accent3: #e4c98a;
+  --glow:    rgba(140,106,50,0.16);
+  --glow2:   rgba(140,106,50,0.08);
   --cyan:  #0891b2;
   --gold:  #d97706;
 }
@@ -134,7 +134,7 @@ a { text-decoration: none; color: inherit; }
   gap: 12px;
 }
 .section-eyebrow::before {
-  content: defined '' ? '' : "";
+  content: '';
   display: inline-block;
   width: 32px; height: 1px;
   background: var(--accent2);
